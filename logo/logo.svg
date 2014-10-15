@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   version="1.1"
+   id="Layer_1"
+   x="0px"
+   y="0px"
+   viewBox="0 0 128 56"
+   enable-background="new 0 0 300 80.7"
+   xml:space="preserve"
+   inkscape:version="0.48.4 r9939"
+   width="100%"
+   height="100%"
+   sodipodi:docname="logo.svg"
+   inkscape:export-filename="D:\Drive\Projects\cgi-node\Logo\logo.png"
+   inkscape:export-xdpi="168.75"
+   inkscape:export-ydpi="168.75"><metadata
+   id="metadata4156"><rdf:RDF><cc:Work
+       rdf:about=""><dc:format>image/svg+xml</dc:format><dc:type
+         rdf:resource="http://purl.org/dc/dcmitype/StillImage" /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs
+   id="defs4154" /><sodipodi:namedview
+   pagecolor="#ffffff"
+   bordercolor="#666666"
+   borderopacity="1"
+   objecttolerance="10"
+   gridtolerance="10"
+   guidetolerance="10"
+   inkscape:pageopacity="0"
+   inkscape:pageshadow="2"
+   inkscape:window-width="1654"
+   inkscape:window-height="880"
+   id="namedview4152"
+   showgrid="false"
+   inkscape:zoom="5.3928677"
+   inkscape:cx="69.580319"
+   inkscape:cy="28.579515"
+   inkscape:window-x="2024"
+   inkscape:window-y="49"
+   inkscape:window-maximized="0"
+   inkscape:current-layer="Layer_1" />
+<g
+   id="g4148"
+   transform="translate(-54.463191,-26.906526)">
+
+
+	<path
+   clip-rule="evenodd"
+   d="m 81.5,29.4 c 0.7,-0.4 1.7,-0.4 2.4,0 L 104,41 c 0.8,0.4 1.2,1.2 1.2,2.1 v 23.2 c 0,0.9 -0.5,1.7 -1.2,2.1 L 83.9,80 c -0.8,0.4 -1.7,0.4 -2.4,0 L 61.4,68.4 C 60.7,68 60.2,67.2 60.2,66.3 V 43.1 c 0,-0.9 0.5,-1.7 1.2,-2.1 L 81.5,29.4 z"
+   id="path4150"
+   inkscape:connector-curvature="0"
+   style="fill:#80bd01;fill-rule:evenodd" />
+	
+</g>
+<flowRoot
+   xml:space="preserve"
+   id="flowRoot2998"
+   style="font-size:20px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#46483f;fill-opacity:0.94117647;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+   transform="translate(10.18042,34.289148)"
+   inkscape:export-xdpi="35.697701"
+   inkscape:export-ydpi="35.697701"><flowPara
+     id="flowPara3004">CGI</flowPara></flowRoot><text
+   xml:space="preserve"
+   style="font-size:22px;font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;text-align:start;line-height:125%;letter-spacing:0px;word-spacing:0px;writing-mode:lr;text-anchor:start;fill:#ffffff;fill-opacity:1;stroke:none;font-family:Sans;-inkscape-font-specification:Sans Bold"
+   x="50.993279"
+   y="34.490108"
+   id="text3007"
+   sodipodi:linespacing="125%"><tspan
+     sodipodi:role="line"
+     id="tspan3009"
+     x="50.993279"
+     y="34.490108">-Node</tspan></text>
+</svg>
