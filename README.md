@@ -42,12 +42,13 @@ CGI-Node run on shared hosting sites running Apache. It can run along side PHP.
 <ul>
   <li>Download the appropriate Node.js binary from <a href="http://nodejs.org/download/">here</a> and copy it to your bin folder on your site.</li>
   <li>Download cgi-node.js from <a href="http://www.cgi-node.org/downloads">here</a> and copy it to your cgi-bin folder on your site.
-  <li>Update the first line within cgi-node.js to point to the location of the node executable you uploaded earlier.</li>
+  <li>Update the first line within cgi-node.js to point to the location of the node executable you uploaded earlier. For example:
+    <pre>#!/home/mysite/bin/node</pre>
+  </li>
   <li>Ensure you have .htaccess file that contains the following information:
    <pre>
-     Action cgi-node /cgi-bin/cgi-node.js 
-     AddHandler cgi-node .jss
-   </pre>
+   Action cgi-node /cgi-bin/cgi-node.js 
+   AddHandler cgi-node .jss</pre>
   </li>
 </ul>
 
