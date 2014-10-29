@@ -46,9 +46,9 @@ CGI-Node run on shared hosting sites running Apache. It can run along side PHP.
     <pre>#!/home/mysite/bin/node</pre>
   </li>
   <li>Ensure you have .htaccess file that contains the following information:
-   <pre>
+   <code>
    Action cgi-node /cgi-bin/cgi-node.js 
-   AddHandler cgi-node .jss</pre>
+   AddHandler cgi-node .jss</code>
   </li>
 </ul>
 
