@@ -9,7 +9,7 @@ Essentially allowing developers to use a single programming language, JavaScript
 
 CGI-Node run on shared hosting sites running Apache. It can run along side PHP.
 
-<h2>Some Key Features</h2>
+<h2>Features</h2>
 
 <ul>
   <li>Complete and easy access to the HTTP Request:
