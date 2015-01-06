@@ -34,7 +34,7 @@ SOFTWARE.
 */
 var CgiNodeConfig = 
 {
-	Version: '0.2',
+	Version: '0.2.1',
 
 	StartTag: '<?',	// Not being used yet.
 	EndTag: '<?', // Not being used yet.
