@@ -126,7 +126,7 @@ function CgiHttpContext(onFinished)
 	 This method is similar to PhpInfo(). It outputs all the HTTP request and server information and variables
 	 to the stream in HTML format.
 	*/
-	this.CgiNodeInfo = function()
+	this.cgiNodeInfo = function()
 	{
 		var drawObject = function(title, object)
 		{

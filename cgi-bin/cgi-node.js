@@ -1,5 +1,7 @@
 #!"D:/Programs/nodejs/node.exe"
 
+
+
 /*
 The MIT License (MIT)
 
@@ -34,13 +36,12 @@ var CgiNodeConfig =
 {
 	Version: '0.2',
 
-	StartTag: '<?',
-	EndTag: '<?',
+	StartTag: '<?',	// Not being used yet.
+	EndTag: '<?', // Not being used yet.
 
-	ScriptExtensions: ['.js'],
+	ScriptExtensions: ['.js'], // Not being used yet.
 
-	EmbededScriptExtensions: ['.jss'],
-
+	EmbededScriptExtensions: ['.jss'], // Not being used yet.
 
 	SessionCookie: 'CGI-NODE-SESSIONID',
 	SessionTimeOut: 15*60, // 15 minutes
@@ -133,10 +134,12 @@ function CgiHttpContext(onFinished)
 	/*
 	 Resolve the file path relative to the root of the website as defined within the configuration,
 	 or if not specified then the base script path.
-	 
-	 TODO: implement this method, use the current script as a relative point, ie module.filename
 	*/
-	this.mapPath = function(path) { return path; };
+	this.mapPath = function(path)
+	{
+		var root = Path.dirname(self.request.server.path_translated)
+		return Path.resolve(root, path);
+	};
 
 	/*
 	 Executes the given file within the current context. 
@@ -174,7 +177,7 @@ function CgiHttpContext(onFinished)
 	 This method is similar to PhpInfo(). It outputs all the HTTP request and server information and variables
 	 to the stream in HTML format.
 	*/
-	this.CgiNodeInfo = function()
+	this.cgiNodeInfo = function()
 	{
 		var drawObject = function(title, object)
 		{
@@ -194,11 +197,13 @@ function CgiHttpContext(onFinished)
 			}
 		};
 
-		self.response.write('<style>.NodeASPTable{ font-family: arial; font-size: 12px; margin: auto; border-collapse: collapse; width: 600px} .NodeASPTable TH{ background-color: #303030; color: white; font-size: 14px; padding: 10px} .NodeASPTable TD{ padding: 5px; } .NodeASPTable TR TD:nth-child(1){ background: #d9ebb3; }</style>');
+		self.response.write('<style>.Logo{ text-align: left; font-size: 36px !important; } .NodeASPTable{ font-family: arial; font-size: 12px; margin: auto; border-collapse: collapse; width: 600px} .NodeASPTable TH{ background-color: #303030; color: white; font-size: 14px; padding: 10px} .NodeASPTable TD{ padding: 5px; } .NodeASPTable TR TD:nth-child(1){ background: #d9ebb3; }</style>');
 		self.response.write('<table class="NodeASPTable" border="1">');
+		self.response.write('<tr><th colspan="2" class="Logo">CGI-NODE v' + CgiNodeConfig.Version + '</th></tr>');
 		
 		var session = {id: self.session.id, path: self.session.path, ipAddress: self.session.ipAddress};
 
+		drawObject('Node Versions', process.versions);
 		drawObject('CGI Command Line Arguments', process.argv);
 		drawObject('Server Variables', self.request.server);
 		drawObject('HTTP Request Headers', self.request.headers);
