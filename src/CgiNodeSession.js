@@ -73,6 +73,11 @@ function CgiHttpSession(request, response)
 		this.id = (request.cookies.hasOwnProperty(CgiNodeConfig.SessionCookie) ? request.cookies[CgiNodeConfig.SessionCookie] : this.create());
 		var path = Path.join(CgiNodeConfig.SessionPath, this.id);
 
+        // If the path doesn't exist, then create it.
+        if (! FS.existsSync(CgiNodeConfig.SessionPath)) {
+            FS.mkdirSync(CgiNodeConfig.SessionPath, 0700);
+        }
+
 		// If the file does not exist then create another ID.
 		if (!FS.existsSync(path)) this.id = this.create();
 
