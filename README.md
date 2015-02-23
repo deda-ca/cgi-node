@@ -50,6 +50,7 @@ CGI-Node run on shared hosting sites running Apache. It can run along side PHP.
    Action cgi-node /cgi-bin/cgi-node.js 
    AddHandler cgi-node .jss</pre>
   </li>
+  <li>Ensure you set the CGI_NODE_SESSIONDIR environment variable on your Apache instance</li>
 </ul>
 
 That's it!

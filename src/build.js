@@ -145,15 +145,30 @@ var HTTP = require('http');
 var QueryString = require('querystring');
 
 // Specifies the path to where node executable exists. NOTE: windows machines require the double quotes.
-var nodeExecPathLinux = '/usr/bin/nodejs'
+var nodeExecPathLinux = '/usr/bin/env node';
 var nodeExecPathWindows = '"D:/Programs/nodejs/node.exe"';
+var nodeExecPath;
 
 // The list of files to build in the correct order.
-var files = ['CgiNodeConfig.js', 'CgiNodeContext.js', 'CgiNodeSession.js', 'CgiNodeResponse.js', 'CgiNodeRequest.js', 'CgiNodeParser.js', 'CgiNode.js'];
+var files = [
+        'CgiNodeConfig.js',
+        'CgiNodeContext.js',
+        'CgiNodeSession.js',
+        'CgiNodeResponse.js',
+        'CgiNodeRequest.js',
+        'CgiNodeParser.js',
+        'CgiNode.js'
+    ];
+
+if (FS.existsSync(nodeExecPathLinux)) {
+    nodeExecPath = nodeExecPathLinux;
+} else {
+    nodeExecPath = nodeExecPathWindows;
+}
 
 // The output path and file name.
 var output = '../cgi-bin/cgi-node';
 
 // Create the build class and run it.
 var build = new CgiNodeBuilder();
-build.run(files, output, nodeExecPathWindows);
+build.run(files, output, nodeExecPath);
