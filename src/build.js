@@ -27,117 +27,116 @@ SOFTWARE.
  The build class is responsible for concatenating all the source code into one file and optimizing it if specified.
  This will help greatly reduce the file size and optimize performance.
 */
-var path = require('path');
+function CgiNodeBuilder()
+{
+	var self = this;
 
-function CgiNodeBuilder() {
-    var self = this;
+	/*
+	 Gets the content for all the given files, concatenates them and returns them.
+	 NOTE: The order of the files does matter, make sure they are in the right order.
+	*/
+	this.getSourceCode = function(files)
+	{
+		var code = '';
+		self.progress('Reading file content...');
 
-    /*
-     Gets the content for all the given files, concatenates them and returns them.
-     NOTE: The order of the files does matter, make sure they are in the right order.
-    */
-    this.getSourceCode = function(files) {
-        var code = '';
-        self.progress('Reading file content...');
+		// Loop through the files and get the content.
+		for (var index = 0; index < files.length; index++)
+		{
+			self.progress('Reading: ' + files[index]);
+			code += '\n\n' + FS.readFileSync(fullPath + files[index]);
+		}
+		
+		// Finally return the code for all the files.
+		return code;
+	};
+	
+	/*
+	 Uses Closure Tools to optimize the JavaScript code.
+	 See: https://developers.google.com/closure/compiler/docs/api-ref for more details.
+	*/	
+	this.optimize = function(code, onFinished)
+	{
+		self.progress('Optimizing Code');
+	
+		// Create the post body object.
+		var postObject =
+		{
+			'compilation_level' : 'SIMPLE_OPTIMIZATIONS',
+			'output_format': 'text',
+			'output_info': 'compiled_code',
+			'warning_level' : 'VERBOSE', //'QUIET',
+			'js_code' : code
+		};
+		
+		// Convert the object into HTTP post body.
+		var postBody = QueryString.stringify( postObject );
+		
+		// Create the post options, see: http://nodejs.org/api/http.html#http_http_request_options_callback for more details.
+		var postOptions = 
+		{
+			host: 'closure-compiler.appspot.com',
+			port: '80',
+			path: '/compile',
+			method: 'POST',
+			headers: {
+				'Content-Type': 'application/x-www-form-urlencoded',
+				'Content-Length': postBody.length
+			}
+		};
+		
+		// Create the HTTP request and read the response data when it comes through.
+		var optimizedCode = '';
+		var httpRequest = HTTP.request(postOptions, function(response)
+		{
+			response.setEncoding('ASCII');
+			response.on('data', function(data){ optimizedCode += data; });
+			response.on('end', function() { onFinished(optimizedCode); });
+		});
 
-        // Loop through the files and get the content.
-        for (var index = 0; index < files.length; index++) {
-            self.progress('Reading: ' + files[index]);
-            code += '\n\n' + FS.readFileSync(fullPath + files[index]);
-        }
+		// Write the post body to the request, close the stream and wait for the response.
+		httpRequest.write(postBody);
+		httpRequest.end();
+	};
 
-        // Finally return the code for all the files.
-        return code;
-    };
+	/*
+	 Outputs the given code to the specified path.
+	*/
+	this.output = function(code, outputPath, nodeExecPath)
+	{
+		self.progress('Writing output file: ' + outputPath);
+	
+		// Add header to optimized code.
+		if (nodeExecPath !== undefined) code = '#!' + nodeExecPath + '\n\n' + code;
+		
+		// Write the file to the destination location.
+		FS.writeFileSync(outputPath, code, {encoding: 'ASCII', flag: 'w'});
+	};
+	
+	/*
+	 Runs the build on the given files and saves the output to the given output path.
+	*/
+	this.run = function(files, outputPath, nodeExecPath)
+	{
+		self.progress('Starting build...');
 
-    /*
-     Uses Closure Tools to optimize the JavaScript code.
-     See: https://developers.google.com/closure/compiler/docs/api-ref for more details.
-    */
-    this.optimize = function(code, onFinished) {
-        self.progress('Optimizing Code');
+		// Get the code from the files.
+		var code = self.getSourceCode(files);
+		
+		// Write the standard, non-compressed/optimized code to file.
+		self.output(code, outputPath + '.js', nodeExecPath);
 
-        // Create the post body object.
-        var postObject = {
-            'compilation_level': 'SIMPLE_OPTIMIZATIONS',
-            'output_format': 'text',
-            'output_info': 'compiled_code',
-            'warning_level': 'VERBOSE', //'QUIET',
-            'js_code': code
-        };
-
-        // Convert the object into HTTP post body.
-        var postBody = QueryString.stringify(postObject);
-
-        // Create the post options, see: http://nodejs.org/api/http.html#http_http_request_options_callback for more details.
-        var postOptions = {
-            host: 'closure-compiler.appspot.com',
-            port: '80',
-            path: '/compile',
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/x-www-form-urlencoded',
-                'Content-Length': postBody.length
-            }
-        };
-
-        // Create the HTTP request and read the response data when it comes through.
-        var optimizedCode = '';
-        var httpRequest = HTTP.request(postOptions, function(response) {
-            response.setEncoding('ASCII');
-            response.on('data', function(data) {
-                optimizedCode += data;
-            });
-            response.on('end', function() {
-                onFinished(optimizedCode);
-            });
-        });
-
-        // Write the post body to the request, close the stream and wait for the response.
-        httpRequest.write(postBody);
-        httpRequest.end();
-    };
-
-    /*
-     Outputs the given code to the specified path.
-    */
-    this.output = function(code, outputPath, nodeExecPath) {
-        self.progress('Writing output file: ' + outputPath);
-
-        // Add header to optimized code.
-        if (nodeExecPath !== undefined) code = '#!' + nodeExecPath + '\n\n' + code;
-
-        // Write the file to the destination location.
-        FS.writeFileSync(outputPath, code, {
-            encoding: 'ASCII',
-            flag: 'w'
-        });
-    };
-
-    /*
-     Runs the build on the given files and saves the output to the given output path.
-    */
-    this.run = function(files, outputPath, nodeExecPath) {
-        self.progress('Starting build...');
-
-        // Get the code from the files.
-        var code = self.getSourceCode(files);
-
-        // Write the standard, non-compressed/optimized code to file.
-        self.output(code, outputPath + '.js', nodeExecPath);
-
-        // Optimize the code then write it to file.
-        self.optimize(code, function(optimizedCode) {
-            self.output(optimizedCode, outputPath + '.min.js', nodeExecPath);
-        });
-    };
-
-    /*
-     Formats the given progress message to HTML and writes it to the output stream.
-    */
-    this.progress = function(message) {
-        process.stdout.write(message + '\n');
-    };
+		// Optimize the code then write it to file.
+		self.optimize(code, function(optimizedCode) { self.output(optimizedCode, outputPath + '.min.js', nodeExecPath); });
+	};
+	
+	/*
+	 Formats the given progress message to HTML and writes it to the output stream.
+	*/
+	this.progress = function(message)
+	{
+		process.stdout.write(message + '\n');
+	};
 }
 
 // Add the required modules.
