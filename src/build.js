@@ -27,6 +27,7 @@ SOFTWARE.
  The build class is responsible for concatenating all the source code into one file and optimizing it if specified.
  This will help greatly reduce the file size and optimize performance.
 */
+var path = require('path');
 function CgiNodeBuilder()
 {
 	var self = this;
