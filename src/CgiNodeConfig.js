@@ -41,5 +41,5 @@ var CgiNodeConfig =
 
 	SessionCookie: 'CGI-NODE-SESSIONID',
 	SessionTimeOut: 15*60, // 15 minutes
-	SessionPath: 'D:/Programs/nodejs/sessions/'
+	SessionPath: process.env.CGI_NODE_SESSIONDIR || 'D:/Programs/nodejs/sessions/'
 };
