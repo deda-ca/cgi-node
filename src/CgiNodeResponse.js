@@ -108,6 +108,6 @@ function CgiHttpResponse()
 		self.sendHeaders();
 
 		// End the process.
-		process.exist();
+		process.exit();
 	};
 }
