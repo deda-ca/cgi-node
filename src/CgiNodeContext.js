@@ -86,8 +86,9 @@ function CgiHttpContext(onFinished)
 	*/
 	this.mapPath = function(path)
 	{
-		var root = Path.dirname(self.request.server.path_translated)
-		return Path.resolve(root, path);
+		var root = Path.dirname(self.request.server.path_translated);
+		// Fixed the path to correctly require modules in a shared Hostgator environment.
+		return Path.resolve(root, path.join(__dirname));
 	};
 
 	/*
@@ -103,7 +104,7 @@ function CgiHttpContext(onFinished)
 		var path = self.mapPath(filePath);
 
 		// Get the script file content.
-		var content = FS.readFileSync(path, options);
+		var content = FS.readFileSync(path.join(__dirname), options);
 
 		// If the file extension is not '.js' then parse out the different code and content sections.
 		// TODO: use the configuration object to check if it is a script file or not.

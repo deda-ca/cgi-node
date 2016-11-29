@@ -27,6 +27,7 @@ SOFTWARE.
  The build class is responsible for concatenating all the source code into one file and optimizing it if specified.
  This will help greatly reduce the file size and optimize performance.
 */
+var path = require('path');
 function CgiNodeBuilder()
 {
 	var self = this;
@@ -44,7 +45,7 @@ function CgiNodeBuilder()
 		for (var index = 0; index < files.length; index++)
 		{
 			self.progress('Reading: ' + files[index]);
-			code += '\n\n' + FS.readFileSync( files[index] );
+			code += '\n\n' + FS.readFileSync(fullPath + files[index]);
 		}
 		
 		// Finally return the code for all the files.
@@ -145,15 +146,22 @@ var HTTP = require('http');
 var QueryString = require('querystring');
 
 // Specifies the path to where node executable exists. NOTE: windows machines require the double quotes.
-var nodeExecPathLinux = '/usr/bin/nodejs'
-var nodeExecPathWindows = '"D:/Programs/nodejs/node.exe"';
+var nodeExecPathLinux = '/usr/bin/env node';
+var nodeExecPathWindows = '"C:/Program\ Files/nodejs/node.exe"';
+
+if (/^win/.test(process.platform)) {
+	nodeExecPath = nodeExecPathWindows;
+} else {
+	nodeExecPath = nodeExecPathLinux;
+}
 
 // The list of files to build in the correct order.
 var files = ['CgiNodeConfig.js', 'CgiNodeContext.js', 'CgiNodeSession.js', 'CgiNodeResponse.js', 'CgiNodeRequest.js', 'CgiNodeParser.js', 'CgiNode.js'];
+var fullPath = __dirname + '/';
 
 // The output path and file name.
-var output = '../cgi-bin/cgi-node';
+var output = path.join(__dirname, '../cgi-bin/cgi-node');
 
 // Create the build class and run it.
 var build = new CgiNodeBuilder();
-build.run(files, output, nodeExecPathWindows);
+build.run(files, output, nodeExecPath);
