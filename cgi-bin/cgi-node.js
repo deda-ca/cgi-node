@@ -1,4 +1,4 @@
-#!"D:/Programs/nodejs/node.exe"
+#!/usr/bin/env node
 
 
 
@@ -34,7 +34,7 @@ SOFTWARE.
 */
 var CgiNodeConfig = 
 {
-	Version: '0.2.1',
+	Version: '0.2',
 
 	StartTag: '<?',	// Not being used yet.
 	EndTag: '<?', // Not being used yet.
@@ -45,7 +45,7 @@ var CgiNodeConfig =
 
 	SessionCookie: 'CGI-NODE-SESSIONID',
 	SessionTimeOut: 15*60, // 15 minutes
-	SessionPath: 'D:/Programs/nodejs/sessions/'
+	SessionPath: process.env.CGI_NODE_SESSIONDIR || '/usr/lib/nodejs/sessions/'
 };
 
 
@@ -294,6 +294,11 @@ function CgiHttpSession(request, response)
 		// Get the session ID from the cookies. If there is no session ID stored then create a new ID and create a new file.
 		this.id = (request.cookies.hasOwnProperty(CgiNodeConfig.SessionCookie) ? request.cookies[CgiNodeConfig.SessionCookie] : this.create());
 		var path = Path.join(CgiNodeConfig.SessionPath, this.id);
+
+        // If the path doesn't exist, then create it.
+        if (! FS.existsSync(CgiNodeConfig.SessionPath)) {
+            FS.mkdirSync(CgiNodeConfig.SessionPath, 0700);
+        }
 
 		// If the file does not exist then create another ID.
 		if (!FS.existsSync(path)) this.id = this.create();
