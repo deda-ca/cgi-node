@@ -30,7 +30,7 @@ SOFTWARE.
 
  This is the global configuration object for CgiNode. 
  
- NOTE: It is not in a JSON file because we want to compile it directly within the final cig-node.js file to optimize load time.
+ NOTE: It is not in a JSON file because we want to compile it directly within the final cgi-node.js file to optimize load time.
 */
 var CgiNodeConfig = 
 {
